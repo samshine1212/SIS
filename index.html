@@ -283,35 +283,51 @@
 </button>
   
   
- 
+ <script>
+    function copyText(index, text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
 
-  <script>
-  function copyText(index, text) {
-    var textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textArea);
+        try {
+            document.execCommand("copy");
+            alert("Enjoy your movie! " + index);
+        } catch (err) {
+            alert("Unable to copy text to clipboard. Please try again manually.");
+        }
 
-    alert("Enjoy your movie! " + index + " ");
-  }
+        document.body.removeChild(textArea);
+    }
 
-  // Set equal button width based on the button with the longest text
-  window.onload = function () {
-    var buttons = document.querySelectorAll("button");
-    var maxWidth = 0;
+    window.onload = function () {
+        var buttons = document.querySelectorAll("button");
+        var maxWidth = 0;
 
-    buttons.forEach(function (button) {
-      maxWidth = Math.max(maxWidth, button.offsetWidth);
-    });
+        buttons.forEach(function (button) {
+            maxWidth = Math.max(maxWidth, button.offsetWidth);
+        });
 
-    buttons.forEach(function (button) {
-      button.style.width = maxWidth + "px";
-    });
-  };
+        buttons.forEach(function (button) {
+            button.style.width = maxWidth + "px";
+        });
+    };
+
+    function copyToClipboard() {
+        var copyText = document.getElementById("textArea");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+
+        try {
+            document.execCommand('copy');
+            alert("Text copied to clipboard: " + copyText.value);
+        } catch (err) {
+            alert("Unable to copy text to clipboard. Please try again manually.");
+        }
+
+        copyText.setSelectionRange(0, 0);
+    }
 </script>
-
 
 </body>
 </html>
